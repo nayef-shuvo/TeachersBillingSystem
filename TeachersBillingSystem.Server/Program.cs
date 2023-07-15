@@ -17,8 +17,14 @@ builder.Services.AddScoped<ITeacherRepository, TeacherRepository>();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddCors();
 
 var app = builder.Build();
+
+app.UseCors(options =>
+{
+    options.WithOrigins("http://localhost:3000");
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

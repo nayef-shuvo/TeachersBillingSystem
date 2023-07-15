@@ -7,7 +7,6 @@ public class User
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    [ForeignKey("Id")]
     public int Id { get; private set; }
 
     [Required]
