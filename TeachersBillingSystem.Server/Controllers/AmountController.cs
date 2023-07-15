@@ -36,6 +36,11 @@ public class AmountController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Add([FromBody] Amount amount)
     {
+        var _amount = await _repository.GetByName(amount.Name);
+        if (_amount is not null) 
+        {
+            return BadRequest("This field is already exist");
+        }
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
@@ -45,12 +50,13 @@ public class AmountController : ControllerBase
     }
 
     [HttpPut("{name}")]
-    public async Task<IActionResult> Update([FromBody] Amount amount)
+    public async Task<IActionResult> Update(string name, [FromBody] Amount amount)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
+        if (name != amount.Name) return BadRequest("Name does not match");
         await _repository.Update(amount);
         return NoContent();
     }
