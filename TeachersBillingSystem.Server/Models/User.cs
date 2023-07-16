@@ -22,5 +22,5 @@ public class User
     public required string PhoneNumber { get; set; }
 
     [Required]
-    public required string Role { get; init; }
+    public required string Role { get; init; } = "Editor";
 }

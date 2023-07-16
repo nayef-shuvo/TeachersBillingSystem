@@ -12,10 +12,15 @@ public class AmountRepository : IAmountRepository
     {
         _context = context;
     }
-    public async Task<List<Amount>?> GetAll()
+    public async Task<Dictionary<string, uint>> GetAll()
     {
-        var all = await _context.Amounts.ToListAsync();
-        return all;
+        var amounts = await _context.Amounts.ToListAsync();
+        var dictonary = new Dictionary<string, uint>();
+        foreach (var amount in amounts)
+        {
+            dictonary.Add(amount.Name, amount.Value);
+        }
+        return dictonary;
     }
 
     public async Task<Amount?> GetByName(string name)
